@@ -1,0 +1,12 @@
+{
+  "autoload": {
+    "psr-4": {
+      "Act\\": "act/",
+      "App\\": "app/",
+      "Controllers\\": "app/Controllers/",
+      "Models\\": "app/Models/",
+      "Policies\\": "app/Policies/",
+      "Sys\\": "app/Sys/"
+    }
+  }
+}

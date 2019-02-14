@@ -1,0 +1,47 @@
+# настройки
+php_flag display_errors on
+Options All -Indexes
+AddDefaultCharset utf-8
+AddCharset utf-8 *
+<IfModule mod_charset.c>
+  CharsetSourceEnc utf-8
+  CharsetDefault utf-8
+</IfModule>
+
+<IfModule mod_gzip.c>
+	mod_gzip_on         Yes
+	mod_gzip_dechunk    Yes
+	mod_gzip_item_include file		\.(html?|txt|css|js|php|pl)$
+	mod_gzip_item_include mime		^text\.*
+	mod_gzip_item_include mime		^application/x-javascript.*
+	mod_gzip_item_exclude mime		^image\.*
+	mod_gzip_item_exclude rspheader	^Content-Encoding:.*gzip.*
+</IfModule>
+
+RewriteEngine on
+RewriteBase /
+
+# redirect from www
+#RewriteCond %{HTTP_HOST} ^www. [NC]
+#RewriteRule www\.(.*) $1 [R=301]
+
+# redirect on https
+# RewriteCond %{HTTP:X-HTTPS} !1
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R,L]
+
+# hide settings
+RewriteRule ^.htaccess$ - [F]
+
+# remove last slash
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)/$  /$1 [R=301,L]
+
+# hide files
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(?!public) index.php [NC,L]
+
+# routing
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L,QSA]
